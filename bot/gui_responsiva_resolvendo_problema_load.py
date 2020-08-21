@@ -487,7 +487,7 @@ def long_operation_thread():
 								navegador.execute_script('arguments[0].scrollTop = arguments[0].scrollHeight', popup)
 								numeros_de_scrolls += 1
 								printar(f'scrolei down {numeros_de_scrolls} times')
-								dormir(30, 50)
+								dormir(50, 70)
 								scrolls += 1
 							except:
 								pass
@@ -514,7 +514,7 @@ def long_operation_thread():
 									data = json.load(file)
 
 								if usuario_enviado in data:
-									printar('Oh I already have sent this message to this same follower.')
+									printar(f'I have already sent {mensagem_a_lista} to {usuario}.')
 								else:
 									try:
 										data.append(usuario_enviado)
@@ -533,23 +533,24 @@ def long_operation_thread():
 									try:
 										perfil_enviar_mensagem = navegador.find_element_by_xpath("//button[@class='fAR91 sqdOP  L3NKy _4pI4F   _8A5w5    ']")
 										perfil_enviar_mensagem.click()
-										printar('entered in your chat.')
-										passarpopus()
+										printar("Entered in a person's chat.")
+										passarpopus()			
 
 									except NoSuchElementException:
-										printar('Oh this account is private')
-										navegador.execute_script('window.history.go(-1)')
-										printar('retured to previous page.')
-
-									except:
 										perfil_seguir = navegador.find_element_by_xpath("//button[@class='_5f5mN       jIbKX  _6VtSN     yZn4P   ']")
 										perfil_seguir.click()
+										passarpopus()
 										printar('Followed the person.')
-										dormir(50, 70)
+										dormir(50,70)
 										perfil_enviar_mensagem = navegador.find_element_by_xpath("//button[@class='fAR91 sqdOP  L3NKy _4pI4F   _8A5w5    ']")
 										perfil_enviar_mensagem.click()
-										printar("Entered in the person's chat.")
 										passarpopus()
+										printar("Entered in the person's chat.")
+										
+									except:
+										printar('Oh the account is private!')
+										navegador.execute_script('window.history.go(-1)')
+										printar('returning to the previous page.')
 									
 									dormir(70, 120)
 									try:
