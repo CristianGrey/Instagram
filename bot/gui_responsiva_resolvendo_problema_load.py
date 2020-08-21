@@ -332,23 +332,12 @@ def long_operation_thread():
 									printar('Clicked in a new followers account.')
 									dormir(70,140)
 									try:
-										try:
-											perfil_enviar_mensagem = navegador.find_element_by_xpath("//button[@class='fAR91 sqdOP  L3NKy _4pI4F   _8A5w5    ']")
-											perfil_enviar_mensagem.click()
-											printar("Entered in a person's chat.")
-											passarpopus()
-										except NoSuchElementException:
-											# //button[@class='_5f5mN       jIbKX  _6VtSN     yZn4P   '   
-											perfil_enviar_mensagem = navegador.find_element_by_xpath("/html/body/div[1]/section/main/div/header/section/div[1]/div[1]/div/span/span[1]/button")
-											perfil_enviar_mensagem.click()
-											passarpopus()
-											printar("Entered in a person's chat.")
-									except NoSuchElementException:
-										printar('Oh the account is private!')
-										navegador.execute_script('window.history.go(-1)')
-										printar('returning to the previous page.')
+										perfil_enviar_mensagem = navegador.find_element_by_xpath("//button[@class='fAR91 sqdOP  L3NKy _4pI4F   _8A5w5    ']")
+										perfil_enviar_mensagem.click()
+										printar("Entered in a person's chat.")
+										passarpopus()			
 
-									except:
+									except NoSuchElementException:
 										perfil_seguir = navegador.find_element_by_xpath("//button[@class='_5f5mN       jIbKX  _6VtSN     yZn4P   ']")
 										perfil_seguir.click()
 										passarpopus()
@@ -358,6 +347,11 @@ def long_operation_thread():
 										perfil_enviar_mensagem.click()
 										passarpopus()
 										printar("Entered in the person's chat.")
+										
+									except:
+										printar('Oh the account is private!')
+										navegador.execute_script('window.history.go(-1)')
+										printar('returning to the previous page.')
 										
 									dormir(70,120)
 									try:
