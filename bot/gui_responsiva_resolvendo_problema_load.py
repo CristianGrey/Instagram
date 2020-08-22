@@ -144,12 +144,12 @@ def long_operation_thread():
 				global navegador
 				try:
 					sleep(8)
-					print('Looking for popus')
+					# print('Looking for popus')
 					botaopop = navegador.find_element_by_xpath('//button[@class="aOOlW  bIiDR  "]')
 					botaopop.click()
 					print('Clicked in a popup')
 				except:
-					print('No popup found')
+					# print('No popup found')
 
 			def login():
 				with open('/Program Files/Instagram/config.json', 'r') as config:
@@ -219,19 +219,26 @@ def long_operation_thread():
 				
 					dormir(40, 100)
 					popup = navegador.find_element_by_xpath("//div[@class='isgrP']")
-					numeros_de_scrolls = 0
-					for i in range(randint(4,6)):
-						navegador.execute_script('arguments[0].scrollTop = arguments[0].scrollHeight', popup)
-						numeros_de_scrolls += 1
-						print(f'scrolled down {numeros_de_scrolls} times')
-						dormir(20,40)
+					# numeros_de_scrolls = 0
+					# for i in range(randint(4,6)):
+					# 	navegador.execute_script('arguments[0].scrollTop = arguments[0].scrollHeight', popup)
+					# 	numeros_de_scrolls += 1
+					# 	print(f'scrolled down {numeros_de_scrolls} times')
+					# 	dormir(20,40)
 
 					dormir(50,100)
-					botoes_seguir = navegador.find_elements_by_xpath("//button[@class='sqdOP  L3NKy   y3zKF     ']")
+					# botoes_seguir = navegador.find_elements_by_xpath("//button[@class='sqdOP  L3NKy   y3zKF     ']")
 					# botoes_seguindo = navegador.find_elements_by_xpath("//button[@class='sqdOP  L3NKy    _8A5w5    ']")
 
 					seguidos = 0
-					for i in range(0, randint(10,12)):
+					i = 0
+					while i < 1000: #se uso um numero no while ele incremeta sozinho
+						if seguidos == randint(10,20):
+							break
+						botoes_seguir = navegador.find_elements_by_xpath("//button[@class='sqdOP  L3NKy   y3zKF     ']")
+						if i >= len(botoes_seguir):
+							navegador.execute_script('arguments[0].scrollTop = arguments[0].scrollHeight', popup)
+							dormir(randint(10,20))
 						botoes_seguir[i].click()
 						passarpopus()
 						seguidos += 1
@@ -479,18 +486,18 @@ def long_operation_thread():
 						# dormir(70, 120)
 						popup = navegador.find_element_by_xpath("//div[@class='isgrP']")
 
-						numeros_de_scrolls = 0
+						# numeros_de_scrolls = 0
 
-						scrolls = 0
-						while scrolls < randint(6,9):
-							try:
-								navegador.execute_script('arguments[0].scrollTop = arguments[0].scrollHeight', popup)
-								numeros_de_scrolls += 1
-								printar(f'scrolei down {numeros_de_scrolls} times')
-								dormir(50, 70)
-								scrolls += 1
-							except:
-								pass
+						# scrolls = 0
+						# while scrolls < randint(6,9):
+						# 	try:
+						# 		navegador.execute_script('arguments[0].scrollTop = arguments[0].scrollHeight', popup)
+						# 		numeros_de_scrolls += 1
+						# 		printar(f'scrolei down {numeros_de_scrolls} times')
+						# 		dormir(50, 70)
+						# 		scrolls += 1
+						# 	except:
+						# 		pass
 
 						usuario_enviado = {}
 						enviados = 0
@@ -505,6 +512,12 @@ def long_operation_thread():
 								seguidores_perfis = navegador.find_elements_by_xpath('//a[@class="FPmhX notranslate  _0imsa "]')
 								printar(f'Loaded {len(seguidores_perfis)} pages.')
 								dormir(10,30)
+
+								if i > seguidores_perfis:
+									for i in range(randint(2,4)):
+										navegador.execute_script('arguments[0].scrollTop = arguments[0].scrollHeight', popup)
+									continue
+
 
 								usuario = seguidores_perfis[i].text
 								usuario_enviado['nome'] = usuario
