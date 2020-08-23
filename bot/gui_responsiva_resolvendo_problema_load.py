@@ -149,6 +149,7 @@ def long_operation_thread():
 					botaopop.click()
 					print('Clicked in a popup')
 				except:
+					pass
 					# print('No popup found')
 
 			def login():
@@ -232,13 +233,12 @@ def long_operation_thread():
 
 					seguidos = 0
 					i = 0
-					while i < 1000: #se uso um numero no while ele incremeta sozinho
+					while i < 100: #se uso um numero no while ele incremeta sozinho
 						if seguidos == randint(10,20):
 							break
 						botoes_seguir = navegador.find_elements_by_xpath("//button[@class='sqdOP  L3NKy   y3zKF     ']")
 						if i >= len(botoes_seguir):
 							navegador.execute_script('arguments[0].scrollTop = arguments[0].scrollHeight', popup)
-							dormir(randint(10,20))
 						botoes_seguir[i].click()
 						passarpopus()
 						seguidos += 1
@@ -415,32 +415,43 @@ def long_operation_thread():
 					passarpopus()
 					dormir(15,45)
 					popup = navegador.find_element_by_xpath("//div[@class='isgrP']")
-					numeros_de_scrolls = 0
-					for i in range(randint(2,6)):
-						navegador.execute_script('arguments[0].scrollTop = arguments[0].scrollHeight', popup)
-						numeros_de_scrolls += 1
-						printar(f'scrolled down {numeros_de_scrolls} times')
-						dormir(20,40)
+					# numeros_de_scrolls = 0
+					# for i in range(randint(2,6)):
+					# 	navegador.execute_script('arguments[0].scrollTop = arguments[0].scrollHeight', popup)
+					# 	numeros_de_scrolls += 1
+					# 	printar(f'scrolled down {numeros_de_scrolls} times')
+					# 	dormir(20,40)
 
 					dormir(50,200)
-					botoes_seguindo = navegador.find_elements_by_xpath("//button[@class='sqdOP  L3NKy    _8A5w5    ']")
+					# botoes_seguindo = navegador.find_elements_by_xpath("//button[@class='sqdOP  L3NKy    _8A5w5    ']")
 
 					desseguidos = 0
+					i = 0
 					try:
-						for i in range(0, randint(10,12)): #cuidado para nao quebrar o script
-							botoes_seguindo[i].click()
-							passarpopus()
-							dormir(30,50)
-							desseguir_confirmar = navegador.find_element_by_xpath('/html/body/div[5]/div/div/div/div[3]/button[1]')
-							desseguir_confirmar.click()
-							desseguidos += 1
-							printar(f'Unfollowed {desseguidos} persons.')
-							dormir(40,60)
+						while i < 100:
+							try:
+								if desseguidos == randint(30,35):
+									break
+								botoes_seguindo = navegador.find_elements_by_xpath("//button[@class='sqdOP  L3NKy    _8A5w5    ']")
+								print(f'Achei {len(botoes_seguindo)} botoes seguindo')
+								if i >= len(botoes_seguindo):
+									navegador.execute_script('arguments[0].scrollTop = arguments[0].scrollHeight', popup)
+								botoes_seguindo[i].click()
+								# passarpopus()
+								dormir(70,100)
+								desseguir_confirmar = navegador.find_element_by_xpath('/html/body/div[5]/div/div/div/div[3]/button[1]')
+								desseguir_confirmar.click()
+								desseguidos += 1
+								printar(f'Unfollowed {desseguidos} persons.')
+								dormir(40,60)
+							except:
+								pass
 
 						navegador.execute_script('window.history.go(-1)')
 						navegador.execute_script('window.history.go(-1)')
 
-					except:
+					except Exception as e:
+						print(e)
 						navegador.execute_script('window.history.go(-1)')
 						navegador.execute_script('window.history.go(-1)')
 
