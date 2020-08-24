@@ -234,16 +234,19 @@ def long_operation_thread():
 					seguidos = 0
 					i = 0
 					while i < 100: #se uso um numero no while ele incremeta sozinho
-						if seguidos == randint(10,20):
-							break
-						botoes_seguir = navegador.find_elements_by_xpath("//button[@class='sqdOP  L3NKy   y3zKF     ']")
-						if i >= len(botoes_seguir):
-							navegador.execute_script('arguments[0].scrollTop = arguments[0].scrollHeight', popup)
-						botoes_seguir[i].click()
-						passarpopus()
-						seguidos += 1
-						print(f'{seguidos} people followed')
-						dormir(10,60)
+						try:
+							if seguidos == randint(10,20):
+								break
+							botoes_seguir = navegador.find_elements_by_xpath("//button[@class='sqdOP  L3NKy   y3zKF     ']")
+							if i >= len(botoes_seguir):
+								navegador.execute_script('arguments[0].scrollTop = arguments[0].scrollHeight', popup)
+							botoes_seguir[i].click()
+							passarpopus()
+							seguidos += 1
+							print(f'{seguidos} people followed')
+							dormir(10,60)
+						except:
+							pass
 
 					navegador.execute_script('window.history.go(-1)')
 					print(f"Returned to {pesquisar}'s page.")
@@ -430,14 +433,12 @@ def long_operation_thread():
 					try:
 						while i < 100:
 							try:
-								if desseguidos == randint(30,35):
+								if desseguidos == randint(15,20):
 									break
 								botoes_seguindo = navegador.find_elements_by_xpath("//button[@class='sqdOP  L3NKy    _8A5w5    ']")
-								print(f'Achei {len(botoes_seguindo)} botoes seguindo')
 								if i >= len(botoes_seguindo):
 									navegador.execute_script('arguments[0].scrollTop = arguments[0].scrollHeight', popup)
 								botoes_seguindo[i].click()
-								# passarpopus()
 								dormir(70,100)
 								desseguir_confirmar = navegador.find_element_by_xpath('/html/body/div[5]/div/div/div/div[3]/button[1]')
 								desseguir_confirmar.click()
@@ -512,8 +513,8 @@ def long_operation_thread():
 
 						usuario_enviado = {}
 						enviados = 0
-						i = 0
-						while i < 500:
+						i = 12
+						while True:
 							if enviados == 15:
 								break
 							usuario_enviado.clear()
@@ -524,11 +525,10 @@ def long_operation_thread():
 								printar(f'Loaded {len(seguidores_perfis)} pages.')
 								dormir(10,30)
 
-								if i > seguidores_perfis:
-									for i in range(randint(2,4)):
-										navegador.execute_script('arguments[0].scrollTop = arguments[0].scrollHeight', popup)
-									continue
-
+								if i >= len(seguidores_perfis):
+									# for i in range(randint(2,4)):
+									navegador.execute_script('arguments[0].scrollTop = arguments[0].scrollHeight', popup)
+									# continue
 
 								usuario = seguidores_perfis[i].text
 								usuario_enviado['nome'] = usuario
@@ -555,26 +555,29 @@ def long_operation_thread():
 									passarpopus()
 
 									try:
-										perfil_enviar_mensagem = navegador.find_element_by_xpath("//button[@class='fAR91 sqdOP  L3NKy _4pI4F   _8A5w5    ']")
-										perfil_enviar_mensagem.click()
-										printar("Entered in a person's chat.")
-										passarpopus()			
+										try:
+											perfil_enviar_mensagem = navegador.find_element_by_xpath("//button[@class='fAR91 sqdOP  L3NKy _4pI4F   _8A5w5    ']")
+											perfil_enviar_mensagem.click()
+											printar("Entered in a person's chat.")
+											passarpopus()			
 
-									except NoSuchElementException:
-										perfil_seguir = navegador.find_element_by_xpath("//button[@class='_5f5mN       jIbKX  _6VtSN     yZn4P   ']")
-										perfil_seguir.click()
-										passarpopus()
-										printar('Followed the person.')
-										dormir(50,70)
-										perfil_enviar_mensagem = navegador.find_element_by_xpath("//button[@class='fAR91 sqdOP  L3NKy _4pI4F   _8A5w5    ']")
-										perfil_enviar_mensagem.click()
-										passarpopus()
-										printar("Entered in the person's chat.")
-										
+										except NoSuchElementException:
+											perfil_seguir = navegador.find_element_by_xpath("//button[@class='_5f5mN       jIbKX  _6VtSN     yZn4P   ']")
+											perfil_seguir.click()
+											passarpopus()
+											printar('Followed the person.')
+											dormir(50,70)
+											perfil_enviar_mensagem = navegador.find_element_by_xpath("//button[@class='fAR91 sqdOP  L3NKy _4pI4F   _8A5w5    ']")
+											perfil_enviar_mensagem.click()
+											passarpopus()
+											printar("Entered in the person's chat.")
+											
+										except:
+											printar('Oh the account is private!')
+											navegador.execute_script('window.history.go(-1)')
+											printar('returning to the previous page.')
 									except:
-										printar('Oh the account is private!')
 										navegador.execute_script('window.history.go(-1)')
-										printar('returning to the previous page.')
 									
 									dormir(70, 120)
 									try:
